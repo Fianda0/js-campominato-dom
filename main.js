@@ -1,4 +1,4 @@
-
+let bombe = [];
 
 //Bottone per iniziare
 document.getElementById('btn-play').addEventListener('click', function () {
@@ -41,6 +41,18 @@ document.getElementById('btn-play').addEventListener('click', function () {
         grid.append(quadrato)
     }
 
+    //Creo ciclo per completare array con le bombe
+    do {
+
+        //genero numero casuale
+        let x = Math.floor(Math.random() * (nCelle - 1 + 1)) + 1;
+
+        //se bombe non contine il numero inseriscilo nell'array
+        if (!bombe.includes(x)) {
+            bombe.push(x)
+        }
+    } while (bombe.length < 16)
+
     //Bottone Restart
     document.getElementById('btn-restart').addEventListener('click', function () {
         //svuoto la griglia
@@ -79,18 +91,14 @@ function clickColor(quadrato, numero) {
     quadrato.addEventListener('click', function () {
 
         //Aggiungo Classe al QUADRATO
-        quadrato.classList.toggle('bck-blu')
-
-        //al click della casella se il testo è vuoto inserisci numero
-        if (quadrato.innerText == "") {
-            quadrato.append(numero)
-
-            // altrimenti rimuovi il numero
-        } else {
-            quadrato.innerText = ''
-        }
+        quadrato.classList.add('bck-blu')
 
         //Stamplo la cella selezionata
         console.log(numero)
     })
 }
+
+
+
+
+
