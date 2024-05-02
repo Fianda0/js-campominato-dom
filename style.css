@@ -27,6 +27,17 @@ select {
     display: none;
 }
 
+main {
+    display: flex;
+}
+
+#punteggio {
+    font-size: 2rem;
+    position: relative;
+    left: -20%;
+    top: 200px;
+}
+
 #griglia {
     margin: 5rem auto;
     display: flex;

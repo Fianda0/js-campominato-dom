@@ -1,13 +1,13 @@
 let bombe = [];
 
 //Creo variabile per il punetggio
-let punti = 0;
+let punti;
 
 //Bottone per iniziare
 document.getElementById('btn-play').addEventListener('click', function () {
 
     //Azzero variabile per il punetggio
-
+    punti = 0;
 
     //Recupero il valore del livello
     let livello = document.getElementById('difficolta')
@@ -19,6 +19,7 @@ document.getElementById('btn-play').addEventListener('click', function () {
     document.getElementById('inizio').classList.add('d-none')
     //Rimuovo display none al restart
     document.getElementById('restart').classList.remove('d-none')
+    document.getElementById('punteggio').classList.remove('d-none')
 
     let grid = document.getElementById('griglia')
 
@@ -41,6 +42,7 @@ document.getElementById('btn-play').addEventListener('click', function () {
         }
     } while (bombe.length < 16)
 
+    nVincente = nCelle - 16
     // Aggiungo alla grigia la classe = al valore
     grid.classList.add(valore)
 
@@ -50,13 +52,11 @@ document.getElementById('btn-play').addEventListener('click', function () {
         let quadrato = creaQuadrato(i)
 
         //Richiamo funzione Cambio colore
-        clickColor(grid, valore, quadrato, i, bombe, punti)
-        punti += punti
+        clickColor(grid, valore, quadrato, i, bombe, nVincente)
 
         //Aggiungo i DIV nella griglia
         grid.append(quadrato)
     }
-
 
     //Bottone Restart
     document.getElementById('btn-restart').addEventListener('click', function () {
@@ -73,7 +73,11 @@ document.getElementById('btn-play').addEventListener('click', function () {
 function restart(griglia, valore) {
     griglia.innerHTML = ''
     document.getElementById('inizio').classList.remove('d-none')
+    document.getElementById('punteggio').classList.add('d-none')
     document.getElementById('restart').classList.add('d-none')
+    document.getElementById('n-punteggio').innerText = '0'
+
+    bombe = []
     //rimuovo dimensione della griglia
     griglia.classList.remove(valore)
 }
@@ -96,7 +100,8 @@ function creaQuadrato(numero) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //funzione CLICK
-function clickColor(griglia, valore, quadrato, numero, array, punteggio) {
+function clickColor(griglia, valore, quadrato, numero, array, numeroCelle) {
+
     //Creo evento click
     quadrato.addEventListener('click', function () {
         //Se clicco un quadrato che contine il numero di un array inserisci rosso
@@ -107,10 +112,13 @@ function clickColor(griglia, valore, quadrato, numero, array, punteggio) {
         } else {
             //altrimenti inserisci Blu
             quadrato.classList.add('bck-blu')
-            punteggio += 1;
-            console.log(punteggio)
+            punti += 1;
+            document.getElementById('n-punteggio').innerText = punti
         }
-
+        if (punti == numeroCelle) {
+            console.log('win ')
+        }
+        console.log(punti)
         //Stamplo la cella selezionata
         console.log(numero)
     })
