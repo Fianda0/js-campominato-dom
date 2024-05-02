@@ -24,26 +24,8 @@ document.getElementById('btn-play').addEventListener('click', function () {
         nCelle = 100
     }
 
-    // Aggiungo alla grigia la classe = al valore
-    grid.classList.add(valore)
-
-
-    //Creo ciclo for per creare i quadrati
-    for (let i = 1; i <= nCelle; i++) {
-
-        //Richiamo funzione CREAQUADRATO
-        let quadrato = creaQuadrato(i)
-
-        //Richiamo funzione Cambio colore
-        clickColor(quadrato, i)
-
-        //Aggiungo i DIV nella griglia
-        grid.append(quadrato)
-    }
-
     //Creo ciclo per completare array con le bombe
     do {
-
         //genero numero casuale
         let x = Math.floor(Math.random() * (nCelle - 1 + 1)) + 1;
 
@@ -52,6 +34,23 @@ document.getElementById('btn-play').addEventListener('click', function () {
             bombe.push(x)
         }
     } while (bombe.length < 16)
+
+    // Aggiungo alla grigia la classe = al valore
+    grid.classList.add(valore)
+
+    //Creo ciclo for per creare i quadrati
+    for (let i = 1; i <= nCelle; i++) {
+
+        //Richiamo funzione CREAQUADRATO
+        let quadrato = creaQuadrato(i)
+
+        //Richiamo funzione Cambio colore
+        clickColor(quadrato, i, bombe)
+
+        //Aggiungo i DIV nella griglia
+        grid.append(quadrato)
+    }
+
 
     //Bottone Restart
     document.getElementById('btn-restart').addEventListener('click', function () {
@@ -85,13 +84,18 @@ function creaQuadrato(numero) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //funzione CLICK
-function clickColor(quadrato, numero) {
+function clickColor(quadrato, numero, array) {
 
     //Creo evento click
     quadrato.addEventListener('click', function () {
 
-        //Aggiungo Classe al QUADRATO
-        quadrato.classList.add('bck-blu')
+        //Se clicco un quadrato che contine il numero di un array inserisci rosso
+        if (array.includes(numero)) {
+            quadrato.classList.add('bck-red')
+        } else {
+            //altrimenti inserisci Blu
+            quadrato.classList.add('bck-blu')
+        }
 
         //Stamplo la cella selezionata
         console.log(numero)
