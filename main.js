@@ -2,12 +2,14 @@ let bombe = [];
 
 //Creo variabile per il punetggio
 let punti;
+let lose;
 
 //Bottone per iniziare
 document.getElementById('btn-play').addEventListener('click', function () {
 
     //Azzero variabile per il punetggio
     punti = 0;
+    lose = 0;
 
     //Recupero il valore del livello
     let livello = document.getElementById('difficolta')
@@ -100,28 +102,33 @@ function creaQuadrato(numero) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //funzione CLICK
-function clickColor(griglia, valore, quadrato, numero, array, numeroCelle) {
-
+function clickColor(griglia, valore, quadrato, numero, array, numeroVincente) {
     //Creo evento click
     quadrato.addEventListener('click', function () {
         //Se clicco un quadrato che contine il numero di un array inserisci rosso
         if (array.includes(numero)) {
             quadrato.classList.add('bck-red')
-            restart(griglia, valore)
-            alert('Hai Perso')
+            lose += 1
+            if (lose == 6) {
+                restart(griglia, valore)
+                alert('Hai Perso')
+            }
         } else {
             //altrimenti inserisci Blu
             quadrato.classList.add('bck-blu')
             punti += 1;
             document.getElementById('n-punteggio').innerText = punti
         }
-        if (punti == numeroCelle) {
-            console.log('win ')
+
+
+        if (punti == numeroVincente) {
+            alert('Hai Vinto')
         }
+
         console.log(punti)
         //Stamplo la cella selezionata
         console.log(numero)
-    })
+    }, { once: true })
 }
 
 
